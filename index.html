@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вам пришло письмо</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Падающие розы -->
+    <div class="roses"></div>
+
+    <main class="container">
+        <div class="envelope">
+            💌
+        </div>
+
+        <h1>Вам пришло письмо,<br>госпожа Ангелина</h1>
+
+        <p class="subtitle">
+            Одно маленькое письмо ждёт своего адресата...
+        </p>
+
+        <div class="buttons">
+            <button class="open-btn" onclick="openLetter()">
+                Открыть 💌
+            </button>
+
+            <button class="no-btn" id="noButton">
+                Не открывать
+            </button>
+        </div>
+    </main>
+
+    <script>
+        function openLetter() {
+            window.location.href = "letter.html";
+        }
+
+        const noButton = document.getElementById("noButton");
+
+        noButton.addEventListener("mouseover", moveButton);
+        noButton.addEventListener("click", moveButton);
+
+        function moveButton() {
+            const maxX = window.innerWidth - noButton.offsetWidth - 20;
+            const maxY = window.innerHeight - noButton.offsetHeight - 20;
+
+            const x = Math.max(10, Math.random() * maxX);
+            const y = Math.max(10, Math.random() * maxY);
+
+            noButton.style.position = "fixed";
+            noButton.style.left = x + "px";
+            noButton.style.top = y + "px";
+        }
+
+        // Создание падающих роз
+        const rosesContainer = document.querySelector(".roses");
+
+        function createRose() {
+            const rose = document.createElement("div");
+
+            rose.classList.add("rose");
+            rose.textContent = "🌹";
+
+            rose.style.left = Math.random() * 100 + "vw";
+            rose.style.animationDuration = (5 + Math.random() * 6) + "s";
+            rose.style.animationDelay = Math.random() * 3 + "s";
+            rose.style.fontSize = (18 + Math.random() * 20) + "px";
+
+            rosesContainer.appendChild(rose);
+
+            setTimeout(() => {
+                rose.remove();
+            }, 12000);
+        }
+
+        setInterval(createRose, 500);
+    </script>
+
+</body>
+</html>
