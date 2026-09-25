@@ -1,84 +1,590 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Вам пришло письмо</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Вам пришло письмо 💌</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    background: linear-gradient(
+        135deg,
+        #ffb6d5,
+        #ff79ad,
+        #ff4f91
+    );
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+}
+
+/* =========================
+   ПАДАЮЩИЕ РОЗЫ
+========================= */
+
+.rose {
+    position: fixed;
+    top: -50px;
+
+    pointer-events: none;
+
+    animation: fall linear forwards;
+
+    z-index: 1;
+}
+
+@keyframes fall {
+
+    0% {
+        transform:
+            translateY(-50px)
+            rotate(0deg);
+
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    50% {
+        transform:
+            translateY(55vh)
+            translateX(40px)
+            rotate(180deg);
+    }
+
+    100% {
+        transform:
+            translateY(110vh)
+            translateX(-40px)
+            rotate(360deg);
+
+        opacity: 0;
+    }
+}
+
+
+/* =========================
+   ОСНОВНОЙ БЛОК
+========================= */
+
+.box {
+
+    width: min(600px, 90%);
+
+    background: rgba(255, 255, 255, 0.95);
+
+    padding: 45px 35px;
+
+    border-radius: 30px;
+
+    text-align: center;
+
+    box-shadow:
+        0 20px 60px rgba(100, 0, 40, 0.3);
+
+    position: relative;
+
+    z-index: 10;
+
+    animation: appear 1s ease;
+}
+
+@keyframes appear {
+
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+/* =========================
+   КОНВЕРТ
+========================= */
+
+.envelope {
+
+    font-size: 75px;
+
+    margin-bottom: 10px;
+
+    animation: floating 3s ease-in-out infinite;
+}
+
+@keyframes floating {
+
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+
+/* =========================
+   ЗАГОЛОВОК
+========================= */
+
+h1 {
+
+    color: #9e2454;
+
+    font-size: clamp(28px, 6vw, 48px);
+
+    line-height: 1.2;
+
+    margin: 10px 0 15px;
+}
+
+.subtitle {
+
+    color: #7a3150;
+
+    font-size: 18px;
+
+    margin-bottom: 30px;
+}
+
+
+/* =========================
+   КНОПКИ
+========================= */
+
+.buttons {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 15px;
+
+    min-height: 60px;
+}
+
+button {
+
+    border: none;
+
+    padding: 13px 28px;
+
+    border-radius: 25px;
+
+    font-size: 17px;
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    cursor: pointer;
+
+    transition: transform 0.2s ease;
+}
+
+.open {
+
+    background: #d6336c;
+
+    color: white;
+
+    box-shadow:
+        0 7px 18px rgba(150, 0, 60, 0.3);
+}
+
+.open:hover {
+
+    transform: scale(1.08);
+}
+
+.no {
+
+    background: #e5e5e5;
+
+    color: #555;
+
+    position: relative;
+}
+
+.no:hover {
+
+    transform: scale(1.05);
+}
+
+
+/* =========================
+   ПИСЬМО
+========================= */
+
+#letter {
+
+    display: none;
+
+    animation: letterAppear 1.2s ease forwards;
+}
+
+@keyframes letterAppear {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(30px)
+            scale(0.95);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+#letter h2 {
+
+    color: #a51f55;
+
+    margin-bottom: 25px;
+}
+
+#letter p {
+
+    color: #542338;
+
+    font-size: 18px;
+
+    line-height: 1.8;
+
+    text-align: left;
+
+    margin-bottom: 18px;
+}
+
+.signature {
+
+    text-align: right;
+
+    margin-top: 30px;
+
+    font-style: italic;
+
+    color: #a51f55;
+
+    font-size: 18px;
+}
+
+.rose-big {
+
+    font-size: 40px;
+
+    margin-top: 20px;
+}
+
+
+/* =========================
+   ТЕЛЕФОН
+========================= */
+
+@media (max-width: 600px) {
+
+    .box {
+
+        padding: 35px 22px;
+    }
+
+    .subtitle {
+
+        font-size: 16px;
+    }
+
+    #letter p {
+
+        font-size: 16px;
+
+        line-height: 1.7;
+    }
+
+    .buttons {
+
+        flex-direction: column;
+    }
+
+    button {
+
+        min-width: 180px;
+    }
+}
+
+</style>
 </head>
+
 
 <body>
 
-    <!-- Падающие розы -->
-    <div class="roses"></div>
 
-    <main class="container">
+<!-- =========================
+     ОСНОВНОЙ БЛОК
+========================= -->
+
+<div class="box">
+
+    <div id="invitation">
+
         <div class="envelope">
             💌
         </div>
 
-        <h1>Вам пришло письмо,<br>госпожа Ангелина</h1>
+        <h1>
+            Вам пришло письмо,<br>
+            госпожа Ангелина
+        </h1>
 
         <p class="subtitle">
             Одно маленькое письмо ждёт своего адресата...
         </p>
 
+
         <div class="buttons">
-            <button class="open-btn" onclick="openLetter()">
+
+            <button
+                class="open"
+                onclick="openLetter()">
                 Открыть 💌
             </button>
 
-            <button class="no-btn" id="noButton">
+            <button
+                class="no"
+                id="noButton">
                 Не открывать
             </button>
+
         </div>
-    </main>
 
-    <script>
-        function openLetter() {
-            window.location.href = "letter.html";
-        }
+    </div>
 
-        const noButton = document.getElementById("noButton");
 
-        noButton.addEventListener("mouseover", moveButton);
-        noButton.addEventListener("click", moveButton);
+    <!-- =========================
+         САМО ПИСЬМО
+    ========================= -->
 
-        function moveButton() {
-            const maxX = window.innerWidth - noButton.offsetWidth - 20;
-            const maxY = window.innerHeight - noButton.offsetHeight - 20;
+    <div id="letter">
 
-            const x = Math.max(10, Math.random() * maxX);
-            const y = Math.max(10, Math.random() * maxY);
+        <div class="envelope">
+            💌
+        </div>
 
-            noButton.style.position = "fixed";
-            noButton.style.left = x + "px";
-            noButton.style.top = y + "px";
-        }
+        <h2>
+            Для госпожи Ангелины 🌹
+        </h2>
 
-        // Создание падающих роз
-        const rosesContainer = document.querySelector(".roses");
+        <p>
+            Дорогая Ангелина,
+        </p>
 
-        function createRose() {
-            const rose = document.createElement("div");
+        <p>
+            Если Вы сейчас читаете это письмо,
+            значит всё-таки решили его открыть.
+        </p>
 
-            rose.classList.add("rose");
-            rose.textContent = "🌹";
+        <p>
+            Я хотел оставить для Вас несколько
+            простых слов, которые иногда гораздо
+            легче написать, чем сказать вслух.
+        </p>
 
-            rose.style.left = Math.random() * 100 + "vw";
-            rose.style.animationDuration = (5 + Math.random() * 6) + "s";
-            rose.style.animationDelay = Math.random() * 3 + "s";
-            rose.style.fontSize = (18 + Math.random() * 20) + "px";
+        <p>
+            Среди миллионов людей существует
+            всего один человек, которому можно
+            отправить именно такое письмо.
+        </p>
 
-            rosesContainer.appendChild(rose);
+        <p>
+            И сегодня этим человеком являетесь Вы,
+            госпожа Ангелина.
+        </p>
 
-            setTimeout(() => {
-                rose.remove();
-            }, 12000);
-        }
+        <p>
+            Надеюсь, эта маленькая открытка
+            хотя бы на несколько минут подарит
+            Вам улыбку. ❤️
+        </p>
 
-        setInterval(createRose, 500);
-    </script>
+        <p>
+            Берегите её.
+        </p>
+
+        <div class="signature">
+
+            С теплом,<br>
+            тот, кто отправил это письмо 💗
+
+        </div>
+
+        <div class="rose-big">
+            🌹
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+
+/* =========================
+   ОТКРЫТИЕ ПИСЬМА
+========================= */
+
+function openLetter() {
+
+    document.getElementById("invitation").style.display = "none";
+
+    document.getElementById("letter").style.display = "block";
+
+}
+
+
+/* =========================
+   УБЕГАЮЩАЯ КНОПКА
+========================= */
+
+const noButton = document.getElementById("noButton");
+
+
+noButton.addEventListener(
+    "mouseover",
+    runAway
+);
+
+noButton.addEventListener(
+    "click",
+    runAway
+);
+
+
+function runAway() {
+
+    const buttonWidth = noButton.offsetWidth;
+    const buttonHeight = noButton.offsetHeight;
+
+
+    const maxX =
+        window.innerWidth -
+        buttonWidth -
+        20;
+
+
+    const maxY =
+        window.innerHeight -
+        buttonHeight -
+        20;
+
+
+    const x =
+        Math.random() * maxX;
+
+
+    const y =
+        Math.random() * maxY;
+
+
+    noButton.style.position = "fixed";
+
+    noButton.style.left = x + "px";
+
+    noButton.style.top = y + "px";
+
+}
+
+
+/* =========================
+   СОЗДАНИЕ РОЗ
+========================= */
+
+function createRose() {
+
+    const rose =
+        document.createElement("div");
+
+
+    rose.className = "rose";
+
+    rose.innerHTML = "🌹";
+
+
+    rose.style.left =
+        Math.random() * 100 + "vw";
+
+
+    rose.style.fontSize =
+        (18 + Math.random() * 25) + "px";
+
+
+    rose.style.animationDuration =
+        (5 + Math.random() * 6) + "s";
+
+
+    document.body.appendChild(rose);
+
+
+    setTimeout(
+        () => rose.remove(),
+        12000
+    );
+
+}
+
+
+/* =========================
+   ПОСТОЯННО СОЗДАЁМ РОЗЫ
+========================= */
+
+setInterval(
+    createRose,
+    450
+);
+
+
+/* Первые розы сразу */
+
+for (let i = 0; i < 15; i++) {
+
+    setTimeout(
+        createRose,
+        i * 200
+    );
+
+}
+
+</script>
 
 </body>
 </html>
